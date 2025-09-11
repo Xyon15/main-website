@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio personnel – Présentation, projets et liens" />
+    <meta name="theme-color" content="#0f172a" />
+    <title>Votre Nom — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Police facultative (inter) : vous pouvez enlever si vous préférez les polices système -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <!-- Image palette (cachée) : placez votre fichier assets/images/color.png -->
+    <img id="palette-image" src="assets/images/color.png" alt="Palette" style="display:none" />
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#top">Votre Nom</a>
+        <nav class="nav">
+          <a href="#a-propos">À propos</a>
+          <a href="#projets">Projets</a>
+          <a href="#liens">Liens</a>
+        </nav>
+        <a class="btn primary" href="mailto:contact@example.com">Me contacter</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container">
+          <h1>Bonjour, je suis <span class="accent">Votre Nom</span></h1>
+          <p class="lead">Développeur passionné — voici une sélection de mes projets et où me trouver.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="#projets">Voir mes projets</a>
+            <a class="btn ghost" href="#liens">Mes liens</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="a-propos" class="section">
+        <div class="container grid-2">
+          <div>
+            <h2>À propos</h2>
+            <p>
+              Écris ici un court paragraphe de présentation (expérience, stack, centres d'intérêt).
+              Tu peux préciser tes objectifs actuels et le type de projets que tu recherches.
+            </p>
+          </div>
+          <div class="about-card">
+            <ul class="bullets">
+              <li><strong>Spécialités</strong> : Web, API, Front/Back</li>
+              <li><strong>Tech</strong> : HTML, CSS, JS (ajuste selon ton profil)</li>
+              <li><strong>Basé à</strong> : Ta ville/pays</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="projets" class="section alt">
+        <div class="container">
+          <h2>Projets</h2>
+          <div class="cards">
+            <!-- Exemple de carte projet -->
+            <article class="card">
+              <div class="card-body">
+                <h3>Nom du projet</h3>
+                <p>Courte description du projet, des techno utilisées et de ce qu'il apporte.</p>
+                <div class="card-actions">
+                  <a class="btn small" href="#" target="_blank" rel="noopener">Démo</a>
+                  <a class="btn small ghost" href="#" target="_blank" rel="noopener">Code</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="liens" class="section">
+        <div class="container">
+          <h2>Liens</h2>
+          <ul class="links">
+            <li>
+              <a href="https://github.com/Xyon15" target="_blank" rel="noopener">
+                <span class="link-title">GitHub</span>
+                <span class="link-sub">github.com/Xyon15</span>
+              </a>
+            </li>
+            <!-- Ajoute ici LinkedIn, email, autres -->
+            <!-- <li>
+              <a href="https://linkedin.com/in/ton-profil" target="_blank" rel="noopener">
+                <span class="link-title">LinkedIn</span>
+                <span class="link-sub">linkedin.com/in/ton-profil</span>
+              </a>
+            </li> -->
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span id="year"></span> Votre Nom. Tous droits réservés.</p>
+      </div>
+    </footer>
+
+    <script src="assets/script.js" defer></script>
+  </body>
+</html>
