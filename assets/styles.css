@@ -50,9 +50,12 @@ body {
   min-width: 400px;
   justify-content: flex-start;
   gap: 15px;
+  background: #121a33; /* Fallback couleur fixe */
   background: var(--card);
   border: 1px solid rgba(255,255,255,0.12);
   transition: all 0.2s ease;
+  /* Force le style même si les variables CSS ne marchent pas */
+  color: #e6e8ee !important;
 }
 
 .btn.github-link:hover {
@@ -64,6 +67,7 @@ body {
 
 .github-text {
   font-weight: 500;
+  color: #e6e8ee; /* Couleur fixe en fallback */
   color: var(--text);
   display: flex;
   align-items: center;
@@ -76,6 +80,8 @@ body {
   display: inline-block;
   vertical-align: top;
   width: 150px;
+  /* Debug: bordure temporaire pour voir si le conteneur est là */
+  /* border: 1px solid red; */
 }
 
 .project-name {
@@ -89,6 +95,9 @@ body {
   opacity: 0;
   transform: translateY(100%);
   animation: scroll-up 8s infinite;
+  color: #e6e8ee; /* Couleur fixe */
+  /* Debug: test si les éléments sont présents */
+  /* background: rgba(255,0,0,0.1); */
 }
 
 .project-name:nth-child(1) { animation-delay: 0s; }
