@@ -1,5 +1,66 @@
 // Met à jour l'année du footer et l'âge dynamique
 (function () {
+  // Configuration des particules (déclarée en premier pour être accessible partout)
+  function setupParticles() {
+    // Vérifier que l'élément particles-js existe
+    const particlesContainer = document.getElementById('particles-js');
+    if (!particlesContainer) {
+      console.warn('Element particles-js not found');
+      return false;
+    }
+    
+    // Vérifier que la bibliothèque particles.js est chargée
+    if (!window.particlesJS) {
+      console.warn('particlesJS library not loaded');
+      return false;
+    }
+
+    try {
+      // Nettoyer le conteneur avant initialisation
+      particlesContainer.innerHTML = '';
+      
+      // Réduire le nombre de particules sur mobile pour les performances
+      const isMobile = window.innerWidth <= 768;
+      const particleCount = isMobile ? 15 : 30;
+      
+      particlesJS('particles-js', {
+        particles: {
+          number: { value: particleCount, density: { enable: true, value_area: 800 } },
+          color: { value: "#9aa3b2" },
+          opacity: { value: isMobile ? 0.2 : 0.3, random: false },
+          size: { value: 3, random: true },
+          line_linked: { 
+            enable: true, 
+            distance: isMobile ? 120 : 150, 
+            color: "#6b7280", 
+            opacity: isMobile ? 0.15 : 0.2, 
+            width: 1 
+          },
+          move: { 
+            enable: true, 
+            speed: isMobile ? 0.5 : 1, 
+            direction: "none", 
+            random: true, 
+            out_mode: "out" 
+          }
+        },
+        interactivity: { 
+          detect_on: "canvas", 
+          events: { 
+            onhover: { enable: !isMobile, mode: "grab" } 
+          } 
+        }
+      });
+      
+      console.log('Particles.js initialized successfully');
+      return true;
+      
+    } catch (error) {
+      console.error('Error initializing particles:', error);
+      return false;
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = String(new Date().getFullYear());
@@ -44,30 +105,47 @@
       console.error('❌ Conteneur project-scroller non trouvé');
     }
 
-    // Configuration des particules
-    function setupParticles() {
-      if (window.particlesJS) {
-        particlesJS('particles-js', {
-          particles: {
-            number: { value: 30, density: { enable: true, value_area: 800 } },
-            color: { value: "#9aa3b2" },
-            opacity: { value: 0.3, random: false },
-            size: { value: 3, random: true },
-            line_linked: { enable: true, distance: 150, color: "#6b7280", opacity: 0.2, width: 1 },
-            move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
-          },
-          interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "grab" } } }
-        });
+    // Attendre que particles.js soit prêt avant d'initialiser
+    function waitForParticlesAndInit() {
+      if (window.particlesJSReady || window.particlesJS) {
+        console.log('Initializing particles...');
+        setupParticles();
+      } else {
+        console.log('Waiting for particles.js...');
+        setTimeout(waitForParticlesAndInit, 100);
       }
     }
-
-    setupParticles();
+    
+    waitForParticlesAndInit();
     
     // Animation au scroll
     setupScrollAnimations();
     
     // Animations pour les clics sur les liens de navigation
     setupNavigationAnimations();
+    
+    // Gestion des changements d'orientation et de taille d'écran
+    setupResponsiveHandlers();
+    
+    // Initialisation différée des particules si la première tentative échoue
+    setTimeout(() => {
+      if (!window.pJSDom || !window.pJSDom[0]) {
+        console.log('Retry particles initialization...');
+        setupParticles();
+      }
+    }, 2000);
+    
+    // Initialisation encore plus différée en cas de problème persistant
+    setTimeout(() => {
+      if (!window.pJSDom || !window.pJSDom[0]) {
+        console.log('Final retry particles initialization...');
+        if (setupParticles()) {
+          console.log('Particles finally initialized successfully');
+        } else {
+          console.log('Particles initialization failed - site will work without particles');
+        }
+      }
+    }, 5000);
   });
 
   // Fonction pour gérer les animations de navigation
@@ -83,14 +161,24 @@
         const targetElement = document.getElementById(targetId);
         
         if (targetElement) {
-          // Animation du lien cliqué
-          animateClickedLink(this);
+          // Animation du lien cliqué (seulement sur desktop)
+          if (window.innerWidth > 768) {
+            animateClickedLink(this);
+          }
           
           // Scroll animé vers la section
           smoothScrollToSection(targetElement);
           
-          // Animation de la section cible
-          animateTargetSection(targetElement);
+          // Animation de la section cible (seulement sur desktop)
+          if (window.innerWidth > 768) {
+            animateTargetSection(targetElement);
+          }
+          
+          // Fermer le dropdown de contact s'il est ouvert
+          const contactDropdown = document.querySelector('.contact-dropdown');
+          if (contactDropdown) {
+            contactDropdown.classList.remove('active');
+          }
         }
       });
     });
@@ -228,10 +316,54 @@
       }
     });
 
+    // Gestion tactile pour mobile
+    if ('ontouchstart' in window) {
+      document.addEventListener('touchstart', (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('active');
+        }
+      });
+    }
+
     // Animation des éléments du menu
     const items = menu.querySelectorAll('.dropdown-item');
     items.forEach((item, index) => {
       item.style.transitionDelay = `${index * 50}ms`;
+    });
+  }
+  
+  // Gestion des changements d'orientation et responsive
+  function setupResponsiveHandlers() {
+    let resizeTimeout;
+    
+    function handleResize() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Réinitialiser les particules avec les nouveaux paramètres
+        if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
+          try {
+            window.pJSDom[0].pJS.fn.vendors.destroypJS();
+            document.getElementById('particles-js').innerHTML = '';
+            console.log('Particles destroyed, reinitializing...');
+          } catch (error) {
+            console.warn('Error destroying particles:', error);
+          }
+        }
+        
+        // Réinitialiser les particules
+        setupParticles();
+        
+        // Fermer le dropdown de contact si ouvert
+        const contactDropdown = document.querySelector('.contact-dropdown');
+        if (contactDropdown) {
+          contactDropdown.classList.remove('active');
+        }
+      }, 200);
+    }
+    
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', () => {
+      setTimeout(handleResize, 100);
     });
   }
 })();
