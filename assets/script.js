@@ -7,6 +7,9 @@
     // Mettre à jour l'âge dynamiquement
     updateAge();
 
+    // Configuration du dropdown de contact
+    setupContactDropdown();
+
     // Thème forcé: couleurs fixes
     applyTheme({ from: '#7c3aed', to: '#06b6d4', accent: '#7c3aed', theme: '#0b1020' });
     
@@ -193,5 +196,41 @@
     // Définir meta theme-color pour les navigateurs mobiles
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta && theme) meta.setAttribute('content', theme);
+  }
+
+  // Configuration du dropdown de contact
+  function setupContactDropdown() {
+    const dropdown = document.querySelector('.contact-dropdown');
+    const button = document.getElementById('contactButton');
+    const menu = document.getElementById('contactMenu');
+
+    if (!dropdown || !button || !menu) return;
+
+    // Toggle du dropdown
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropdown.classList.toggle('active');
+    });
+
+    // Fermer le dropdown en cliquant ailleurs
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('active');
+      }
+    });
+
+    // Fermer avec Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        dropdown.classList.remove('active');
+      }
+    });
+
+    // Animation des éléments du menu
+    const items = menu.querySelectorAll('.dropdown-item');
+    items.forEach((item, index) => {
+      item.style.transitionDelay = `${index * 50}ms`;
+    });
   }
 })();
