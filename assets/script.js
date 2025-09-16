@@ -59,7 +59,73 @@
     
     // Animation au scroll
     setupScrollAnimations();
+    
+    // Animations pour les clics sur les liens de navigation
+    setupNavigationAnimations();
   });
+
+  // Fonction pour gérer les animations de navigation
+  function setupNavigationAnimations() {
+    const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          // Animation du lien cliqué
+          animateClickedLink(this);
+          
+          // Scroll animé vers la section
+          smoothScrollToSection(targetElement);
+          
+          // Animation de la section cible
+          animateTargetSection(targetElement);
+        }
+      });
+    });
+  }
+
+  // Animation du lien cliqué
+  function animateClickedLink(link) {
+    // Effet de pulsation
+    link.style.transform = 'scale(1.1)';
+    link.style.background = 'linear-gradient(135deg, rgba(124,58,237,0.3), rgba(6,182,212,0.2))';
+    
+    setTimeout(() => {
+      link.style.transform = '';
+      link.style.background = '';
+    }, 200);
+  }
+
+  // Scroll fluide vers la section
+  function smoothScrollToSection(targetElement) {
+    const headerHeight = document.querySelector('.site-header').offsetHeight;
+    const targetPosition = targetElement.offsetTop - headerHeight - 20;
+    
+    window.scrollTo({
+      top: targetPosition,
+      behavior: 'smooth'
+    });
+  }
+
+  // Animation de la section cible
+  function animateTargetSection(targetElement) {
+    // Ajouter une classe temporaire pour l'effet de surbrillance
+    targetElement.classList.add('section-highlight');
+    
+    // Effet de surbrillance temporaire
+    targetElement.style.transition = 'all 0.6s ease';
+    targetElement.style.background = 'linear-gradient(135deg, rgba(124,58,237,0.05), rgba(6,182,212,0.03))';
+    
+    setTimeout(() => {
+      targetElement.style.background = '';
+      targetElement.classList.remove('section-highlight');
+    }, 1500);
+  }
 
   // Fonction pour gérer les animations au scroll
   function setupScrollAnimations() {
