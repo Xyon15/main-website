@@ -37,7 +37,64 @@
     } else {
       console.error('❌ Conteneur project-scroller non trouvé');
     }
+
+    // Configuration des particules
+    function setupParticles() {
+      if (window.particlesJS) {
+        particlesJS('particles-js', {
+          particles: {
+            number: { value: 30, density: { enable: true, value_area: 800 } },
+            color: { value: "#9aa3b2" },
+            opacity: { value: 0.3, random: false },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: "#6b7280", opacity: 0.2, width: 1 },
+            move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
+          },
+          interactivity: { detect_on: "canvas", events: { onhover: { enable: true, mode: "grab" } } }
+        });
+      }
+    }
+
+    setupParticles();
+    
+    // Animation au scroll
+    setupScrollAnimations();
   });
+
+  // Fonction pour gérer les animations au scroll
+  function setupScrollAnimations() {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observer tous les éléments avec la classe fade-in-section
+    const fadeElements = document.querySelectorAll('.fade-in-section');
+    fadeElements.forEach(el => observer.observe(el));
+
+    // Animation séquentielle des cartes de projets
+    const cards = document.querySelectorAll('.card');
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, observerOptions);
+
+    cards.forEach(card => {
+      card.style.animationPlayState = 'paused';
+      cardObserver.observe(card);
+    });
+  }
 
   function applyTheme({ from, to, accent, theme }) {
     const root = document.documentElement;
