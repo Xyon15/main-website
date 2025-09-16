@@ -1,8 +1,11 @@
-// Met à jour l'année du footer et applique le thème fixe
+// Met à jour l'année du footer et l'âge dynamique
 (function () {
   document.addEventListener('DOMContentLoaded', () => {
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+    // Mettre à jour l'âge dynamiquement
+    updateAge();
 
     // Thème forcé: couleurs fixes
     applyTheme({ from: '#7c3aed', to: '#06b6d4', accent: '#7c3aed', theme: '#0b1020' });
@@ -160,6 +163,25 @@
       card.style.animationPlayState = 'paused';
       cardObserver.observe(card);
     });
+  }
+
+  // Fonction pour calculer et mettre à jour l'âge dynamiquement
+  function updateAge() {
+    const birthDate = new Date(2009, 2, 22); // 22 mars 2009 (mois 0-indexé)
+    const today = new Date();
+    
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    
+    // Si on n'a pas encore atteint l'anniversaire cette année
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    
+    const ageEl = document.getElementById('age');
+    if (ageEl) {
+      ageEl.textContent = String(age);
+    }
   }
 
   function applyTheme({ from, to, accent, theme }) {
