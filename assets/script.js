@@ -72,9 +72,10 @@
 
   // Fonction pour gérer les animations de navigation
   function setupNavigationAnimations() {
-    const navLinks = document.querySelectorAll('.nav a[href^="#"]');
+    // Sélectionner TOUS les liens internes qui pointent vers des sections (pas seulement ceux de la nav)
+    const internalLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
     
-    navLinks.forEach(link => {
+    internalLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         
