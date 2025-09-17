@@ -10,15 +10,14 @@ Ce site web est conçu comme une vitrine de présentation professionnelle avec u
 
 - HTML5
 - CSS3 (avec variables CSS, animations et media queries)
-- JavaScript vanilla
+- JavaScript
 - [Particles.js](https://vincentgarreau.com/particles.js/) pour le fond animé
 - Polices Google Fonts (Inter)
 
 ## Fonctionnalités
 
-- **Design responsive** - S'adapte automatiquement à tous les écrans
 - **Navigation fluide** - Défilement doux vers les sections avec animations
-- **Fond animé** - Effet de particules interactif (optimisé pour les performances mobiles)
+- **Fond animé** - Effet de particules interactif 
 - **Thème visuel** - Dégradés et animations subtiles pour une interface moderne
 - **Dropdown de contact** - Menu déroulant pour les coordonnées
 - **Animation de projets** - Affichage dynamique de mes projets GitHub
