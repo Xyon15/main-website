@@ -341,19 +341,32 @@
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         // Réinitialiser les particules avec les nouveaux paramètres
+        let particlesContainer = document.getElementById('particles-js');
         if (window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS) {
           try {
             window.pJSDom[0].pJS.fn.vendors.destroypJS();
-            document.getElementById('particles-js').innerHTML = '';
+            if (particlesContainer) {
+              particlesContainer.innerHTML = '';
+            }
             console.log('Particles destroyed, reinitializing...');
           } catch (error) {
             console.warn('Error destroying particles:', error);
           }
         }
-        
+
+        // S'assurer que le conteneur existe, sinon le recréer
+        particlesContainer = document.getElementById('particles-js');
+        if (!particlesContainer) {
+          const newDiv = document.createElement('div');
+          newDiv.id = 'particles-js';
+          // Ajout à l'endroit approprié du DOM (par défaut: body en haut)
+          document.body.insertBefore(newDiv, document.body.firstChild);
+          console.log('particles-js container recreated');
+        }
+
         // Réinitialiser les particules
         setupParticles();
-        
+
         // Fermer le dropdown de contact si ouvert
         const contactDropdown = document.querySelector('.contact-dropdown');
         if (contactDropdown) {
