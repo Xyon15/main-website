@@ -27,8 +27,8 @@
         particles: {
           number: { value: particleCount, density: { enable: true, value_area: 200 } },
           color: { value: "#9aa3b2" },
-          opacity: { value: isMobile ? 0.2 : 0.3, random: false },
-          size: { value: 3, random: true },
+          opacity: { value: isMobile ? 0.25 : 0.6, random: false },
+          size: { value: isMobile ? 3 : 7, random: false },
           shape: { type: "polygon", polygon: { nb_sides: 15 } },
           line_linked: { 
             enable: true, 
