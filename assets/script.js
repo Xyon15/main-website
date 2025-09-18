@@ -25,11 +25,11 @@
       
       particlesJS('particles-js', {
         particles: {
-          number: { value: particleCount, density: { enable: true, value_area: 500 } },
+          number: { value: particleCount, density: { enable: true, value_area: 200 } },
           color: { value: "#9aa3b2" },
           opacity: { value: isMobile ? 0.2 : 0.3, random: false },
           size: { value: 3, random: true },
-          shape: { type: "polygon", polygon: { nb_sides: 8 } },
+          shape: { type: "polygon", polygon: { nb_sides: 15 } },
           line_linked: { 
             enable: true, 
             distance: isMobile ? 120 : 150, 
