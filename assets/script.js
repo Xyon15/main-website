@@ -96,7 +96,9 @@
         name.style.top = '0';
         name.style.left = '0';
         name.style.width = '100%';
-        name.style.animation = `scroll-up 8s infinite`;
+        // Ajuster la durée d'animation selon le nombre de projets
+        const totalDuration = projectNames.length * 2;
+        name.style.animation = `scroll-up ${totalDuration}s infinite`;
         name.style.animationDelay = `${index * 2}s`;
       });
       
