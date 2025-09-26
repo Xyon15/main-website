@@ -235,6 +235,14 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          // Si c'est la section projets, animer aussi les cartes
+          if (entry.target.id === 'projets') {
+            const cards = entry.target.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+              card.classList.add('visible');
+              console.log(`Carte ${index + 1} animée:`, card.querySelector('h3').textContent);
+            });
+          }
         }
       });
     }, observerOptions);
@@ -243,20 +251,7 @@
     const fadeElements = document.querySelectorAll('.fade-in-section');
     fadeElements.forEach(el => observer.observe(el));
 
-    // Animation séquentielle des cartes de projets
-    const cards = document.querySelectorAll('.card');
-    const cardObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-        }
-      });
-    }, observerOptions);
-
-    cards.forEach(card => {
-      card.style.animationPlayState = 'paused';
-      cardObserver.observe(card);
-    });
+    // Les cartes sont animées uniquement par CSS pour éviter les doubles animations
   }
 
   // Fonction pour calculer et mettre à jour l'âge dynamiquement
