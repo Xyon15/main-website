@@ -377,8 +377,12 @@ body {
       rgba(6,182,212,0.02) 100%
     );
     backdrop-filter: blur(1px);
-    margin: 10px 0;
-    border-radius: 8px;
+    padding: 40px 0;
+  }
+  
+  /* Conteneur mobile avec marges internes pour préserver l'espacement */
+  #a-propos .container {
+    padding: 0 16px;
   }
   
   /* Section projets avec fond subtil */
@@ -398,12 +402,34 @@ body {
   );
   position: relative;
   overflow: hidden;
+  padding: 60px 0;
 }
 
-/* Assurer une largeur maximale cohérente */
+/* Force la section à prendre toute la largeur */
+#a-propos::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 100%;
+  background: inherit;
+  transform: translateX(-50%);
+  z-index: -1;
+}
+
+/* Remettre le contenu dans le bon cadre */
 #a-propos .container {
-  max-width: min(var(--container), 95vw);
+  max-width: var(--container);
   margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Assurer une largeur maximale cohérente pour le contenu */
+#a-propos .container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 20px;
 }
 .hero { padding: 84px 0 64px; background: linear-gradient(135deg, color-mix(in oklab, var(--gradient-from) 20%, transparent), transparent); }
 .hero h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 12px; }
@@ -455,7 +481,11 @@ body {
       rgba(6,182,212,0.015) 100%
     );
     backdrop-filter: blur(1px);
-    border-radius: 6px;
+    padding: 50px 0;
+  }
+  
+  #a-propos .container {
+    padding: 0 24px;
   }
 }
 
