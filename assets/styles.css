@@ -321,7 +321,7 @@ body {
 }
 
 .project-name {
-  animation: scroll-up 12s infinite;
+  animation: scroll-up 10s infinite;
 }
 
 .project-name:nth-child(1) { animation-delay: 0s; }
@@ -329,18 +329,17 @@ body {
 .project-name:nth-child(3) { animation-delay: 4s; }
 .project-name:nth-child(4) { animation-delay: 6s; }
 .project-name:nth-child(5) { animation-delay: 8s; }
-.project-name:nth-child(6) { animation-delay: 10s; }
 
 @keyframes scroll-up {
   0% {
     transform: translateY(100%);
     opacity: 0;
   }
-  5%, 15% {
+  5%, 18% {
     transform: translateY(0);
     opacity: 1;
   }
-  20%, 100% {
+  23%, 100% {
     transform: translateY(-100%);
     opacity: 0;
   }
