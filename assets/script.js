@@ -163,6 +163,8 @@
         const targetElement = document.getElementById(targetId);
         
         if (targetElement) {
+          console.log('Navigating to:', targetId);
+          
           // Animation du lien cliqué (seulement sur desktop)
           if (window.innerWidth > 768) {
             animateClickedLink(this);
@@ -173,7 +175,9 @@
           
           // Animation de la section cible (seulement sur desktop)
           if (window.innerWidth > 768) {
-            animateTargetSection(targetElement);
+            setTimeout(() => {
+              animateTargetSection(targetElement);
+            }, 300);
           }
           
           // Fermer le dropdown de contact s'il est ouvert
@@ -181,6 +185,8 @@
           if (contactDropdown) {
             contactDropdown.classList.remove('active');
           }
+        } else {
+          console.error('Target element not found:', targetId);
         }
       });
     });
@@ -200,13 +206,20 @@
 
   // Scroll fluide vers la section
   function smoothScrollToSection(targetElement) {
-    const headerHeight = document.querySelector('.site-header').offsetHeight;
-    const targetPosition = targetElement.offsetTop - headerHeight - 20;
-    
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
-    });
+    try {
+      console.log('Attempting scroll to:', targetElement.id);
+      
+      // Utiliser scrollIntoView qui est plus compatible
+      targetElement.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start',
+        inline: 'nearest'
+      });
+      
+      console.log('Scroll command executed');
+    } catch (error) {
+      console.error('Scroll error:', error);
+    }
   }
 
   // Animation de la section cible
